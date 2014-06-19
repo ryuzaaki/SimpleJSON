@@ -60,7 +60,8 @@ JSONValue *JSONValue::Parse(const wchar_t **data)
 	
 	// Is it a boolean?
 	// Edit 19/06/2014: I don't see a need to check the string length, because we are already comparing n chars in wcsncasecmp.
-	else if ((wcsncasecmp(*data, L"true", 4) == 0) || (wcsncasecmp(*data, L"false", 5) == 0))
+	// Edit 19/06/2014: Readded string length check. I assume you're using it to ensure data only contains a 4, or 5 character string.
+	else if ((simplejson_wcsnlen(*data, 4) && wcsncasecmp(*data, L"true", 4) == 0) || (simplejson_wcsnlen(*data, 5) && wcsncasecmp(*data, L"false", 5) == 0))
 	{
 		bool value = wcsncasecmp(*data, L"true", 4) == 0;
 		(*data) += value ? 4 : 5;
